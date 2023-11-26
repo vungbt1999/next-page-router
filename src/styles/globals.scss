@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Roboto Mono', monospace, sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-primary font-primary font-extrabold tracking-normal;
+}
+
+a {
+  @apply no-underline m-0 p-0;
+}
+
+p {
+  @apply m-0 p-0;
+}
