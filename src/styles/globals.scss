@@ -34,3 +34,11 @@ a {
 p {
   @apply m-0 p-0;
 }
+
+.bg-neon {
+  background: linear-gradient(
+    106deg,
+    var(--color-surface-brand) 0%,
+    var(--color-surface-accent) 85.61%
+  );
+}

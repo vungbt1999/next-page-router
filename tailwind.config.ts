@@ -87,6 +87,10 @@ const config: Config = {
         DEFAULT: "var(--color-surface-accent)",
       },
     },
+    backgroundImage: {
+      'hero-employee': "url('/assets/background/hero-employee.png')",
+      'hero-employer': "url('/assets/background/hero-jobseeker.png')",
+    }
   },
   plugins: [],
 };

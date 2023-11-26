@@ -16,7 +16,7 @@ export const themeConfig: UIConfig = {
       default: '#A5A7AF'
     },
     invert: {
-      default: '#E0E6EB'
+      default: '#FFFFFF'
     },
     error: {
       default: '#E05858'
@@ -28,7 +28,7 @@ export const themeConfig: UIConfig = {
       default: '#7AFB3D'
     },
     surfacePrimary: {
-      default: '#E0E6EB'
+      default: '#FFFFFF'
     },
     surfaceSecondary: {
       default: '#F6F6F9'

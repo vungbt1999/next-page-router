@@ -1,4 +1,4 @@
-// import { LoginResult } from "@/config/graphql-api/generated"
+import { EUserRole, ISignInRes, IUser } from '@/types';
 
 export interface Token {
   accessToken: string;
@@ -9,13 +9,15 @@ declare module 'next-auth/jwt' {
   interface JWT extends Token {}
 }
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     token?: Token;
+    user?: IUser;
+    role?: EUserRole;
     expires: string;
   }
 
-  interface User extends LoginResult {
-    id: string
+  interface User extends ISignInRes {
+    id: string;
   }
 }

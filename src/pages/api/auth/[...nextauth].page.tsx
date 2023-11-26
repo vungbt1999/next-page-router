@@ -14,12 +14,14 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          const loginResult = await authApi.signIn({
+          const signInRes = await authApi.signIn({
             username: credentials?.username ?? '',
             password: credentials?.password ?? ''
           });
-          if (loginResult) {
-            return { ...loginResult, id: loginResult.profile?.id } as User;
+          const userProfile = signInRes.data.user;
+          const jwtAuth = signInRes.data.jwt;
+          if (userProfile && jwtAuth) {
+            return { ...jwtAuth, id: userProfile.id } as User;
           }
           return null;
         } catch (error) {
@@ -36,8 +38,8 @@ export const authOptions = {
         newToken = user;
       }
       if (
-        newToken?.accessTokenExpires &&
-        new Date(newToken.accessTokenExpires).getTime() <= new Date().getTime() + 60000
+        newToken?.expires &&
+        new Date(newToken.expires).getTime() <= new Date().getTime() + 60000
       ) {
         // return refreshToken({
         //   refreshToken: String(newToken?.refreshToken || '')
@@ -45,17 +47,18 @@ export const authOptions = {
         //   if (result.error) {
         //     return signOut();
         //   }
-        //   return { ...newToken, ...result };
+        //   return { ...newToken, . ..result };
         // });
       }
-      return newToken;
+      return { ...newToken, role: user?.role ?? 'admin' };
     },
     async session({ session, token }: any) {
       session.token = {
         accessToken: token.accessToken,
-        accessTokenExpires: token.accessTokenExpires
+        accessTokenExpires: token.expires
       };
-      session.expires = token.accessTokenExpires;
+      session.expires = token.expires;
+      session.role = token?.role ?? 'admin';
       delete session.user;
       return session;
     }
@@ -64,7 +67,7 @@ export const authOptions = {
     secret: process.env.JWT_SECRET
   },
   pages: {
-    signIn: '/login'
+    signIn: '/employee/login'
   }
 };
 export default NextAuth(authOptions);

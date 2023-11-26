@@ -1,18 +1,19 @@
 /* eslint-disable no-empty */
-export enum KeyStorage {
+export enum EKeyStorage {
   LOCALE = 'locale',
-  AUTH = 'auth'
+  AUTH = 'auth',
+  ROLE = 'role'
 }
 
 const localStorageUtils = {
-  set: (key: KeyStorage, value: string): boolean => {
+  set: (key: EKeyStorage, value: string): boolean => {
     try {
       localStorage.setItem(key, value);
       return true;
     } catch (error) {}
     return false;
   },
-  setObject: (key: KeyStorage, value: unknown): boolean => {
+  setObject: (key: EKeyStorage, value: unknown): boolean => {
     try {
       const newValue = JSON.stringify(value);
       localStorage.setItem(key, newValue);
@@ -20,7 +21,7 @@ const localStorageUtils = {
     } catch (error) {}
     return false;
   },
-  get: (key: KeyStorage, defaultValue: string | null = null): string | null => {
+  get: (key: EKeyStorage, defaultValue: string | null = null): string | null => {
     try {
       const value = localStorage.getItem(key);
       if (value) {
@@ -30,7 +31,7 @@ const localStorageUtils = {
     return defaultValue;
   },
 
-  getObject: (key: KeyStorage, defaultValue: unknown = {}): any => {
+  getObject: (key: EKeyStorage, defaultValue: unknown = {}): any => {
     try {
       const value = localStorage.getItem(key);
       if (value) {
@@ -41,7 +42,7 @@ const localStorageUtils = {
     return defaultValue;
   },
 
-  remove: (key: KeyStorage) => {
+  remove: (key: EKeyStorage) => {
     localStorage.removeItem(key);
   },
 

@@ -1,3 +1,4 @@
+import { ResponseBase } from '@/types';
 import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
@@ -17,7 +18,7 @@ const getLabelLogRequest = (config: InternalAxiosRequestConfig) => {
 };
 
 export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_RESTFUL_API_BASE_URL,
+  baseURL: process.env.RESTFUL_API_URL,
   timeout: 10000,
   paramsSerializer: (params: Record<string, any>) => queryString.stringify(params)
 });
@@ -116,21 +117,37 @@ export const getHeader = async (headerConf: HeaderConf = {}) => {
 };
 
 const axiosClient = {
-  async get<T = any>(url: string, params?: any, headerConf?: HeaderConf) {
+  async get<ReqType, ResType>(
+    url: string,
+    params?: ReqType,
+    headerConf?: HeaderConf
+  ): Promise<ResponseBase<ResType>> {
     const headers = await getHeader(headerConf);
-    return instance.get<any, T>(url, { params, headers });
+    return instance.get<ReqType, ResponseBase<ResType>>(url, { params, headers });
   },
-  async post<T = any>(url: string, data: T, headerConf?: HeaderConf) {
+  async post<ReqType, ResType>(
+    url: string,
+    data: ReqType,
+    headerConf?: HeaderConf
+  ): Promise<ResponseBase<ResType>> {
     const headers = await getHeader(headerConf);
-    return instance.post<any, T>(url, data, { headers });
+    return instance.post<ReqType, ResponseBase<ResType>>(url, data, { headers });
   },
-  async put<T = any>(url: string, data: T, headerConf?: HeaderConf) {
+  async put<ReqType, ResType>(
+    url: string,
+    data: ReqType,
+    headerConf?: HeaderConf
+  ): Promise<ResponseBase<ResType>> {
     const headers = await getHeader(headerConf);
-    return instance.put<any, T>(url, data, { headers });
+    return instance.put<ReqType, ResponseBase<ResType>>(url, data, { headers });
   },
-  async delete<T = any>(url: string, headerConf?: HeaderConf) {
+  async delete<ReqType, ResType>(
+    url: string,
+    data?: ReqType,
+    headerConf?: HeaderConf
+  ): Promise<ResponseBase<ResType>> {
     const headers = await getHeader(headerConf);
-    return instance.delete<any, T>(url, { headers });
+    return instance.delete<ReqType, ResponseBase<ResType>>(url, { data, headers: { ...headers } });
   }
 };
 

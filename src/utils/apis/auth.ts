@@ -1,14 +1,17 @@
+import { ISignUpRes, ISignUpReq, ISignInRes, ISignInReq } from '@/types';
 import axiosClient from './axios-client';
 
 const apiName = {
-  auth: '/auth'
+  auth: '/auth',
+  signUp: '/auth/sign-up',
+  signIn: '/auth/sign-in'
 };
 
 export const authApi = {
-  signUp: () => {
-    return axiosClient.post(apiName.auth, undefined, { isAuth: false });
+  signUp: (body: ISignUpReq) => {
+    return axiosClient.post<ISignUpReq, ISignUpRes>(apiName.signUp, body, { isAuth: false });
   },
-  signIn: () => {
-    return axiosClient.post(apiName.auth, undefined, { isAuth: false });
+  signIn: (body: ISignInReq) => {
+    return axiosClient.post<ISignInReq, ISignInRes>(apiName.signIn, body, { isAuth: false });
   }
 };
